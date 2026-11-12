@@ -22,5 +22,6 @@ from app.routers import export as router_export
 from app.routers import cache as router_cache
 from app.routers import model as router_model
 from app.routers import log as router_log
+from app.routers import authorization as router_authorization
 
-ROUTERS = [router_indicator, router_datasource, router_query, router_experiment, router_dataset, router_chart, router_report, router_service, router_dashboard, router_dimension, router_filter, router_schedule, router_export, router_cache, router_model, router_log]
+ROUTERS = [router_indicator, router_datasource, router_query, router_experiment, router_dataset, router_chart, router_report, router_service, router_dashboard, router_dimension, router_filter, router_schedule, router_export, router_cache, router_model, router_log, router_authorization]

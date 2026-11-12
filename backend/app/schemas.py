@@ -220,3 +220,45 @@ class LogEntry(BaseModel):
     field_5: str | None = None  # 查询耗时
     field_6: str | None = None  # 返回行数
     field_7: str | None = None  # 日志备注
+
+
+class GrantUpsertPayload(BaseModel):
+    """登记/调整单条消费方授权（显式授权或默认继承）。"""
+
+    服务编号: str
+    应用编号: str
+    响应字段: str
+    缓存范围: str | None = None
+    授权类型: str = "显式授权"  # 显式授权 / 默认继承
+
+
+class EmergencyRevokePayload(BaseModel):
+    """紧急撤权：立即生效，优先级高于默认继承授权。"""
+
+    服务编号: str
+    应用编号: str
+    撤权原因: str | None = None
+
+
+class ServiceCallPayload(BaseModel):
+    """消费应用调用数据服务。"""
+
+    服务编号: str
+    应用编号: str
+    查询参数: dict[str, Any] = Field(default_factory=dict)
+
+
+class GrantImportRow(BaseModel):
+    """授权清单导入的单行：应用编号、响应字段、缓存范围。"""
+
+    应用编号: str
+    响应字段: str
+    缓存范围: str | None = None
+    授权类型: str = "显式授权"
+
+
+class GrantImportPayload(BaseModel):
+    """数据服务发布前上传的消费方授权清单。"""
+
+    服务编号: str
+    清单: list[GrantImportRow]

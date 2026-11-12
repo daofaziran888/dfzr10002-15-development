@@ -55,6 +55,20 @@ class ServiceService:
         target = ACTION_RULES[action]
         if target not in STATUS_ORDER:
             return None, f"目标状态「{target}」不在允许的状态序列里"
+
+        # 发布动作走消费方授权领域：绑定应用授权、固化唯一当前版本并同步缓存规则。
+        # 没有授权关系的演示数据（SERV-* 骨架记录）保持原有状态流转，不阻断页面操作。
+        if action == "发布服务":
+            from app.services.authorization import authorization_service
+
+            service_code = str(entry.get("服务编号") or "")
+            if authorization_service.list_grants(service_code):
+                _, message = authorization_service.publish_service(service_code)
+                if message is None:
+                    return None, "服务发布失败，请检查消费方授权配置"
+                refreshed = authorization_service.find_service(service_code)
+                return refreshed or entry, message
+
         entry["status"] = target
         entry["pending"] = target != STATUS_ORDER[-1]
         entry["abnormal"] = action in NEGATIVE_ACTIONS

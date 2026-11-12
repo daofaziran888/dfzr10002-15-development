@@ -1,0 +1,20 @@
+[
+  {
+    "应用编号": "APP-0001",
+    "响应字段": "region,amount",
+    "缓存范围": "DS-SALES:APP-0001",
+    "授权类型": "显式授权"
+  },
+  {
+    "应用编号": "APP-0002",
+    "响应字段": "region,amount,orders,customers,channel",
+    "缓存范围": "DS-SALES:APP-0002",
+    "授权类型": "显式授权"
+  },
+  {
+    "应用编号": "APP-0004",
+    "响应字段": "region,amount,orders,customers,channel",
+    "缓存范围": "DS-SALES:APP-0004",
+    "授权类型": "默认继承"
+  }
+]
